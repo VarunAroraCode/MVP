@@ -1,68 +1,15 @@
 import React, { Component } from 'react';
-import {StyleSheet, Button, View, SafeAreaView, Text, Select, Alert, ScrollView, Picker, TouchableOpacity } from 'react-native';
+import {Button, View, SafeAreaView, Text, Select, Alert, ScrollView, Picker, TouchableOpacity } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Constants from 'expo-constants';
+import styles from './styles/styles.js';
 import dummyData from './dummyData.js';
+import axios from 'axios';
+
 
 function Separator() {
   return <View style={styles.separator} />;
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-    marginHorizontal: 3,
-    backgroundColor: 'black',
-  },
-  header: {
-    color: 191970,
-    textAlign: 'center',
-    fontSize: 30,
-  },
-  description: {
-    color: 123123,
-    textAlign: 'left',
-    fontSize: 23,
-    color : 'white',
-  },
-  head: {
-     height: 40,
-      backgroundColor: 'black',
- },
-  text: {
-     margin: 6 ,
-     fontSize: 10,
-     color: "white",
-  },
-  title: {
-    textAlign: 'center',
-    marginVertical: 8,
-    color: 'white',
-  },
-  scrollView: {
-    backgroundColor: 'pink',
-    marginHorizontal: 20,
-  },
-  dropDown: {
-    backgroundColor: 'black',
-    textAlign: 'center',
-    width: 200,
-  },
-  fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: '#737373',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  goBack : {
-    width: 30,
-    marginTop: 10,
-  },
-});
-
 
 export default class App extends Component {
   constructor(props) {
@@ -76,7 +23,14 @@ export default class App extends Component {
       flex: 'select your Flex',
       team: 'select your Team',
       tableHead: ["   ", 'Top', 'Jungler', 'Mid', 'Carry', 'Flex', 'Team'],
+      champStats: [],
     };
+  }
+  
+  componentDidMount(){
+    axios.get('/')
+      .then((response) => {this.setState({ champStats: response.data })})
+      .catch((err) => console.error(err));
   }
   handleRecruitClick(){
     this.setState({selectionRender : false})
@@ -86,6 +40,11 @@ export default class App extends Component {
   }
 
   render() {
+    // Reflect.deleteProperty(this.state.champStats, "_id":"5dd4588af872f87b5a8da533")
+    // Reflect.deleteProperty(this.state.champStats, "_id":"5dd4588af872f87b5a8da534")
+    // Reflect.deleteProperty(this.state.champStats, "_id":"5dd4588af872f87b5a8da535")
+    // Reflect.deleteProperty(this.state.champStats, "_id":"5dd4588af872f87b5a8da536")
+    // Reflect.deleteProperty(this.state.champStats, "_id":"5dd4588af872f87b5a8da537")
     const playerTop = this.state.top;
     const playerJungler = this.state.jungler;
     const playerMid = this.state.mid;
